@@ -32,7 +32,7 @@ export default settings;`);
 
 
 gulp.task('build:jspm', ['compile:styles'], () => jspm.bundleSFX(
-  paths.TMP_INDEX_JS, paths.BUILD_INDEX_JS, {
+  paths.INDEX_SCRIPT_BASE, paths.BUILD_INDEX_JS, {
     minify: false,
     mangle: false,
     sourceMaps: true
@@ -53,7 +53,7 @@ gulp.task('build:html', () =>
 
 
 gulp.task('build:images', () =>
-  gulp.src(paths.TMP_IMAGE)
+  gulp.src(paths.SRC_IMAGE)
   .pipe($.imagemin({
     progressive: true,
     interlaced: true
@@ -64,7 +64,7 @@ gulp.task('build:images', () =>
 
 gulp.task('build', (callback) =>
   runSequence(
-    ['clean:build', 'build:make-settings', 'utils:copy_to_tmp'],
+    ['clean:build', 'build:make-settings'],
     ['build:js', 'build:html', 'build:images'],
     callback
   )

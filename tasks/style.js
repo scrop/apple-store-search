@@ -16,5 +16,5 @@ gulp.task('compile:styles', () => {
   .pipe($.changed(paths.BUILD_DIR, {extension: '.css'}))
   .pipe($.sass().on('error', $.sass.logError))
   .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-  .pipe(gulp.dest(paths.TMP_DIR));
+  .pipe(gulp.dest(paths.SRC_DIR));
 });

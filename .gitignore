@@ -3,4 +3,5 @@
 .tmp
 jspm_packages
 node_modules
+src/build.js*
 src/config/settings.js

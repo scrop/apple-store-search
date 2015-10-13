@@ -46,7 +46,7 @@ gulp.task('dist:copy', () => {
 
 gulp.task('dist', (callback) =>
   runSequence(
-    ['clean:build', 'clean:dist', 'build:make-settings', 'utils:copy_to_tmp'],
+    ['clean:build', 'clean:dist', 'build:make-settings'],
     ['dist:js', 'dist:html', 'build:images'],
     'dist:copy',
     callback
