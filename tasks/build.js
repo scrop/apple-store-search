@@ -4,6 +4,7 @@ import path from 'path';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import jspm from 'jspm';
 import runSequence from 'run-sequence';
+import vinylPaths from 'vinyl-paths';
 
 import * as paths from './paths';
 import environments from '../src/config/environments';
@@ -31,7 +32,7 @@ export default settings;`);
 });
 
 
-gulp.task('build:jspm', () => jspm.bundleSFX(
+gulp.task('build:jspm', ['js:lint'], () => jspm.bundle(
   paths.INDEX_SCRIPT_BASE, paths.BUILD_INDEX_JS, {
     minify: false,
     mangle: false,
@@ -40,20 +41,18 @@ gulp.task('build:jspm', () => jspm.bundleSFX(
 ));
 
 
-gulp.task('build:js', (callback) =>
-  runSequence('build:jspm', 'js:replace_paths', callback)
-);
-
-
-gulp.task('build:html', () =>
-  gulp.src(paths.SRC_INDEX_HTML)
-  .pipe($.htmlReplace({'js': paths.INDEX_SCRIPT}))
+gulp.task('build:copy_files', () => gulp.src([
+  paths.SYSTEM_JS, paths.CONFIG_JS, paths.SRC_INDEX_HTML
+])
+  .pipe(vinylPaths((paths) => {
+    $.util.log(`Copying ${paths}…`);
+    return Promise.resolve();
+  }))
   .pipe(gulp.dest(paths.BUILD_DIR))
 );
 
 
-gulp.task('build:images', () =>
-  gulp.src(paths.SRC_IMAGE)
+gulp.task('build:images', () => gulp.src(paths.SRC_IMAGE)
   .pipe($.imagemin({
     progressive: true,
     interlaced: true
@@ -62,10 +61,8 @@ gulp.task('build:images', () =>
 );
 
 
-gulp.task('build', (callback) =>
-  runSequence(
+gulp.task('build', (callback) => runSequence(
     ['clean:build', 'build:make-settings'],
-    ['build:js', 'build:html', 'build:images'],
+    ['build:copy_files', 'build:jspm', 'build:images'],
     callback
-  )
-);
+));
