@@ -38,7 +38,7 @@ function _serve(baseDir, reloadTasks, done) {
   const opts = Object.assign({}, BS_OPTIONS, {server: serverOpts});
   browserSync(opts, done);
 
-  return gulp.watch(paths.SRC_ALL, reloadTasks).on('change', reportChange);
+  gulp.watch(paths.SRC_ALL, reloadTasks).on('change', reportChange);
 }
 
 
