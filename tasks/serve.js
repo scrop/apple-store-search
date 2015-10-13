@@ -16,7 +16,7 @@ const BS_OPTIONS = {
 };
 
 const BS_SERVER_OPTIONS = {
-    baseDir: ['.', paths.SRC_DIR],
+    baseDir: [paths.SRC_DIR],
     middleware: (req, res, next) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       next();
@@ -55,9 +55,7 @@ gulp.task('reload:dist', (callback) => {
 });
 
 
-gulp.task('serve:dev', [
-  'build:make-settings', 'compile:styles', 'js:lint'
-], (done) => {
+gulp.task('serve:dev', ['build:make-settings', 'js:lint'], (done) => {
   const opts = Object.assign({}, BS_OPTIONS, {server: BS_SERVER_OPTIONS});
 
   browserSync(opts, done);
@@ -65,8 +63,7 @@ gulp.task('serve:dev', [
   gulp.watch(paths.SRC_HTML, ['reload']).on('change', reportChange);
   gulp.watch(paths.SRC_SCRIPT, ['js:lint', 'reload'])
   .on('change', reportChange);
-  gulp.watch(paths.SRC_STYLE, ['compile:styles', 'reload'])
-  .on('change', reportChange);
+  gulp.watch(paths.SRC_STYLE, ['reload']).on('change', reportChange);
 });
 
 
