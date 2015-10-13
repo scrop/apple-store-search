@@ -9,6 +9,7 @@ export const JSPM_PKG_DIR = path.join(SRC_DIR, 'jspm_packages');
 const EXCLUDE = path.join(`!${JSPM_PKG_DIR}`, '**/*');
 
 export const BUILD_ALL = path.join(BUILD_DIR, '**/*');
+export const BUILD_SCRIPT = path.join(BUILD_DIR, '**/*.js');
 
 export const SRC_ALL = [path.join(SRC_DIR, '**/*'), EXCLUDE];
 export const SRC_HTML = [path.join(SRC_DIR, '**/*.html'), EXCLUDE];
@@ -22,5 +23,5 @@ export const INDEX_SCRIPT_BASE = 'index';
 export const INDEX_SCRIPT = `${INDEX_SCRIPT_BASE}.js`;
 export const BUILD_INDEX_JS = path.join(BUILD_DIR, INDEX_SCRIPT);
 export const SETTINGS = 'config/settings.js';
-export const SYSTEM_JS = path.join(JSPM_PKG_DIR, 'system.js');
+export const SYSTEM_JS = path.join(JSPM_PKG_DIR, 'system.js*');
 export const CONFIG_JS = path.join(SRC_DIR, 'config.js');
