@@ -8,7 +8,7 @@ import gulp from './_gulp';
 const $ = gulpLoadPlugins();
 
 
-gulp.task('dist:post-jspm', () => gulp.src(paths.BUILD_INDEX_JS)
+gulp.task('dist:post-jspm', () => gulp.src(paths.BUILD_SCRIPT)
   .pipe($.replace(/(angular.bootstrap.*strictDi:\s*)(false)/g, '$1true'))
   .pipe($.ngAnnotate())
   .pipe($.uglify())
